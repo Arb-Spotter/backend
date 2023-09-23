@@ -20,19 +20,21 @@ class PrismaMigrations(models.Model):
 
     class Meta:
         managed = False
-        db_table = '_prisma_migrations'
+        db_table = "_prisma_migrations"
 
 
 class Exchanges(models.Model):
-    exchange = models.TextField(unique=True)
+    exchange = models.TextField(primary_key=True)
 
     class Meta:
         managed = False
-        db_table = 'exchanges'
+        db_table = "exchanges"
 
 
 class MarketData(models.Model):
-    token = models.OneToOneField('Tokens', models.DO_NOTHING, db_column='token', primary_key=True)  # The composite primary key (token, updatedAt, exchange) found, that is not supported. The first column is selected.
+    token = models.OneToOneField(
+        "Tokens", models.DO_NOTHING, db_column="token", primary_key=True
+    )  # The composite primary key (token, updatedAt, exchange) found, that is not supported. The first column is selected.
     open = models.FloatField(blank=True, null=True)
     high = models.FloatField(blank=True, null=True)
     low = models.FloatField(blank=True, null=True)
@@ -42,65 +44,79 @@ class MarketData(models.Model):
     percentage_change = models.FloatField(blank=True, null=True)
     change = models.FloatField(blank=True, null=True)
     b_a_spread = models.FloatField(blank=True, null=True)
-    updatedat = models.DateTimeField(db_column='updatedAt')  # Field name made lowercase.
+    updatedat = models.DateTimeField(
+        db_column="updatedAt"
+    )  # Field name made lowercase.
 
     class Meta:
         managed = False
-        db_table = 'market_data'
-        unique_together = (('token', 'updatedat', 'exchange'),)
+        db_table = "market_data"
+        unique_together = (("token", "updatedat", "exchange"),)
 
 
 class OneDayOhlcvData(models.Model):
-    token = models.OneToOneField('Tokens', models.DO_NOTHING, db_column='token', primary_key=True)  # The composite primary key (token, updatedAt, exchange) found, that is not supported. The first column is selected.
+    token = models.OneToOneField(
+        "Tokens", models.DO_NOTHING, db_column="token", primary_key=True
+    )  # The composite primary key (token, updatedAt, exchange) found, that is not supported. The first column is selected.
     open = models.FloatField()
     high = models.FloatField()
     low = models.FloatField()
     close = models.FloatField()
     volume = models.FloatField()
     exchange = models.TextField()
-    updatedat = models.DateTimeField(db_column='updatedAt')  # Field name made lowercase.
+    updatedat = models.DateTimeField(
+        db_column="updatedAt"
+    )  # Field name made lowercase.
 
     class Meta:
         managed = False
-        db_table = 'one_day_ohlcv_data'
-        unique_together = (('token', 'updatedat', 'exchange'),)
+        db_table = "one_day_ohlcv_data"
+        unique_together = (("token", "updatedat", "exchange"),)
 
 
 class OneHourOhlcvData(models.Model):
-    token = models.OneToOneField('Tokens', models.DO_NOTHING, db_column='token', primary_key=True)  # The composite primary key (token, updatedAt, exchange) found, that is not supported. The first column is selected.
+    token = models.OneToOneField(
+        "Tokens", models.DO_NOTHING, db_column="token", primary_key=True
+    )  # The composite primary key (token, updatedAt, exchange) found, that is not supported. The first column is selected.
     open = models.FloatField()
     high = models.FloatField()
     low = models.FloatField()
     close = models.FloatField()
     volume = models.FloatField()
     exchange = models.TextField()
-    updatedat = models.DateTimeField(db_column='updatedAt')  # Field name made lowercase.
+    updatedat = models.DateTimeField(
+        db_column="updatedAt"
+    )  # Field name made lowercase.
 
     class Meta:
         managed = False
-        db_table = 'one_hour_ohlcv_data'
-        unique_together = (('token', 'updatedat', 'exchange'),)
+        db_table = "one_hour_ohlcv_data"
+        unique_together = (("token", "updatedat", "exchange"),)
 
 
 class OneMinOhlcvData(models.Model):
-    token = models.OneToOneField('Tokens', models.DO_NOTHING, db_column='token', primary_key=True)  # The composite primary key (token, updatedAt, exchange) found, that is not supported. The first column is selected.
+    token = models.OneToOneField(
+        "Tokens", models.DO_NOTHING, db_column="token", primary_key=True
+    )  # The composite primary key (token, updatedAt, exchange) found, that is not supported. The first column is selected.
     open = models.FloatField()
     high = models.FloatField()
     low = models.FloatField()
     close = models.FloatField()
     volume = models.FloatField()
     exchange = models.TextField()
-    updatedat = models.DateTimeField(db_column='updatedAt')  # Field name made lowercase.
+    updatedat = models.DateTimeField(
+        db_column="updatedAt"
+    )  # Field name made lowercase.
 
     class Meta:
         managed = False
-        db_table = 'one_min_ohlcv_data'
-        unique_together = (('token', 'updatedat', 'exchange'),)
+        db_table = "one_min_ohlcv_data"
+        unique_together = (("token", "updatedat", "exchange"),)
 
 
 class Tokens(models.Model):
-    token = models.TextField(unique=True)
+    token = models.TextField(primary_key=True)
 
     class Meta:
         managed = False
-        db_table = 'tokens'
+        db_table = "tokens"
