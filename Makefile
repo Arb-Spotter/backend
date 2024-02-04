@@ -1,3 +1,5 @@
-run: python manage.py runserver
+run: 
+	python manage.py runserver
 
-# inspectdb: @python manage.py inspectdb > models.py
+inspectdb: 
+	@python manage.py inspectdb > models.py
