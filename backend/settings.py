@@ -14,6 +14,7 @@ from pathlib import Path
 import environ
 
 import arb_spotter_app
+
 env = environ.Env()
 
 
@@ -25,6 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# TODO: remove this secret.
 SECRET_KEY = "django-insecure-ad*z8w0rtxyg9pyk8s)p$r27-f-mj@rg%po^u6a@eg52tyj4$^"
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -42,8 +44,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "arb_spotter_app.apps.ArbSpotterAppConfig"
+    "arb_spotter_app.apps.ArbSpotterAppConfig",
+    "rest_framework_swagger",
 ]
+
+REST_FRAMEWORK = {"DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema"}
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -82,11 +88,11 @@ WSGI_APPLICATION = "backend.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": env('DB_NAME'),
-        "USER": env('DB_USER'),
-        "PASSWORD": env('DB_PASS'),
-        "HOST": env('DB_HOST'),
-        "PORT": env('DB_PORT'),
+        "NAME": env("DB_NAME"),
+        "USER": env("DB_USER"),
+        "PASSWORD": env("DB_PASS"),
+        "HOST": env("DB_HOST"),
+        "PORT": env("DB_PORT"),
     }
 }
 

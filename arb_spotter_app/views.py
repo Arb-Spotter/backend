@@ -35,5 +35,5 @@ def history(request):
         return HttpResponse("missing query parameters, required 'candle_size', 'token', 'exchange'", status=HTTPStatus.BAD_REQUEST)
 
     model = candle_size_model_map[candle_size]
-    ohlcv = model.objects.filter(token=token, exchange=exchange).order_by("updatedat").values("close", "updatedat")
-    return JsonResponse(data={"data": list(ohlcv)}, status= 200)
+    ohlcv = model.objects.filter(token=token.upper(), exchange=exchange.lower()).order_by("updatedat").values("close", "updatedat")
+    return JsonResponse(data={"data": list(ohlcv), "size": len(ohlcv)}, status= 200)
