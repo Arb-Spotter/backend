@@ -77,6 +77,6 @@ def history(request):
     ohlcv = (
         model.objects.filter(token=token.upper(), exchange=exchange.lower())
         .order_by("updatedat")
-        .values("close", "updatedat")
+        .values("open", "high", "close", "volume", "updatedat")
     )
     return JsonResponse(data={"data": list(ohlcv), "size": len(ohlcv)}, status=200)
