@@ -8,23 +8,8 @@
 from django.db import models
 
 
-class PrismaMigrations(models.Model):
-    id = models.CharField(primary_key=True, max_length=36)
-    checksum = models.CharField(max_length=64)
-    finished_at = models.DateTimeField(blank=True, null=True)
-    migration_name = models.CharField(max_length=255)
-    logs = models.TextField(blank=True, null=True)
-    rolled_back_at = models.DateTimeField(blank=True, null=True)
-    started_at = models.DateTimeField()
-    applied_steps_count = models.IntegerField()
-
-    class Meta:
-        managed = False
-        db_table = "_prisma_migrations"
-
-
 class Exchanges(models.Model):
-    exchange = models.TextField(primary_key=True)
+    exchange = models.TextField(unique=True)
 
     class Meta:
         managed = False
@@ -115,8 +100,34 @@ class OneMinOhlcvData(models.Model):
 
 
 class Tokens(models.Model):
-    token = models.TextField(primary_key=True)
+    token = models.TextField(unique=True)
+    large = models.TextField(blank=True, null=True)
+    name = models.TextField(blank=True, null=True)
+    thumb = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = "tokens"
+
+
+class TokensMarketData(models.Model):
+    name = models.TextField(blank=True, null=True)
+    thumb = models.TextField(blank=True, null=True)
+    large = models.TextField(blank=True, null=True)
+    token = models.TextField(blank=True, primary_key=True)
+    open = models.FloatField(blank=True, null=True)
+    high = models.FloatField(blank=True, null=True)
+    low = models.FloatField(blank=True, null=True)
+    close = models.FloatField(blank=True, null=True)
+    volume = models.FloatField(blank=True, null=True)
+    exchange = models.TextField(blank=True, null=True)
+    percentage_change = models.FloatField(blank=True, null=True)
+    change = models.FloatField(blank=True, null=True)
+    b_a_spread = models.FloatField(blank=True, null=True)
+    updatedat = models.DateTimeField(
+        db_column="updatedAt", blank=True, null=True
+    )  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = "tokens_market_data"
